@@ -4,46 +4,66 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>The Daily Top 5</title>
-  <style>
+    <style>
     body {
-      background-color: steelblue;
-      color: white;
+      background-color: steelblue; /* Placeholder for steel blue background */
+      color: white; /* Placeholder for white font color */
       font-family: Arial, sans-serif;
     }
-
-    /* Additional styles for share links */
-    #share-buttons a {
-      color: white;
-      text-decoration: none;
-      margin-right: 10px; /* Add some spacing between share links */
-    }
+    /* You can add more CSS styling here */
   </style>
-  <!-- Google Analytics Tracking Code -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=YOUR_TRACKING_ID"></script>
-  <script>
-    // Your Google Analytics tracking code here
-  </script>
 </head>
 <body>
   <h1>The Daily Top 5</h1>
   <p>Guess the top 5 sodas by sales:</p>
   <ul id="cityList" style="list-style: none; padding:0">
-    <li>?????</li>
-    <li>?????</li>
-    <li>?????</li>
-    <li>?????</li>
-    <li>?????</li>
-  </ul>
+  <li>?????</li>
+  <li>?????</li>
+  <li>?????</li>
+  <li>?????</li>
+  <li>?????</li>
+</ul>
   <input type="text" id="guess" />
   <button id="submit">Submit Guess</button>
   <p id="result"></p>
-  <div id="share-buttons">
-    <a id="twitter-share-button" href="#" target="_blank">Share on Twitter</a>
-    <a id="sms-share-button" href="#">Share via SMS</a>
-  </div>
   <script>
     const cities = ['Diet Coke', 'Coke', 'Sprite', 'Pepsi', 'Dr. Pepper'];
+    const cityVariations = {
+      'Coca Cola': 'Coke',
+      'Dr Pepper': 'Dr. Pepper'
+      // Add more variations as needed
+    };
     const cityList = document.getElementById('cityList');
     const submitButton = document.getElementById('submit');
     const resultParagraph = document.getElementById('result');
-    let
+    let remainingGuesses = 5;
+
+    submitButton.addEventListener('click', () => {
+    const guessInput = document.getElementById('guess').value.trim();
+    if (remainingGuesses > 0) {
+      remainingGuesses--;
+      const correctGuessIndex = cities.findIndex(city => city.toLowerCase() === guessInput.toLowerCase() || cityVariations[guessInput] === city);
+
+        if (correctGuessIndex !== -1) {
+          cityList.children[correctGuessIndex].textContent = cities[correctGuessIndex];
+          resultParagraph.textContent = `Correct guess! ${remainingGuesses} guesses remaining.`;
+        } else {
+          resultParagraph.textContent = `Incorrect guess. ${remainingGuesses} guesses remaining.`;
+        }
+
+        if (remainingGuesses === 0) {
+          resultParagraph.textContent = 'Game over. You used all your guesses.';
+          submitButton.disabled = true;
+          revealAnswers();
+        }
+      }
+    });
+
+    function revealAnswers() {
+      for (let i = 0; i < cities.length; i++) {
+        cityList.children[i].textContent = cities[i];
+      }
+    }
+  </script>
+</body>
+</html>
