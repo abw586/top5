@@ -10,6 +10,12 @@
       color: white; /* Placeholder for white font color */
       font-family: Arial, sans-serif;
     }
+       /* Additional styles for share links */
+    #share-buttons a {
+      color: white;
+      text-decoration: none;
+      margin-right: 10px; /* Add some spacing between share links */
+      }
     /* You can add more CSS styling here */
   </style>
 </head>
@@ -67,18 +73,20 @@
       for (let i = 0; i < cities.length; i++) {
         cityList.children[i].textContent = cities[i];
       }
-    } // Get the correct answers count
+    // Get the correct answers count
     const correctAnswersCount = cities.filter(city => cityList.textContent.includes(city)).length;
 
     // Update the Twitter share button link
     const twitterShareButton = document.getElementById('twitter-share-button');
     twitterShareButton.href = `https://twitter.com/intent/tweet?text=I got ${correctAnswersCount} correct answers in The Daily Top 5 guessing game! Try it out: ${window.location.href}`;
 
-    // Update the SMS share button link
+    // Generate SMS share link and open SMS when clicked
     const smsShareButton = document.getElementById('sms-share-button');
-    const gameUrl = encodeURIComponent(window.location.href);
-    const smsShareLink = smsShareButton.getAttribute('href').replace('[CORRECT_ANSWERS_COUNT]', correctAnswersCount).replace('[GAME_URL]', gameUrl);
-    smsShareButton.setAttribute('href', smsShareLink);
+    smsShareButton.addEventListener('click', () => {
+      const gameUrl = encodeURIComponent(window.location.href);
+      const smsContent = `I got ${correctAnswersCount} correct answers in The Daily Top 5 guessing game! Try it out: ${gameUrl}`;
+      window.location.href = `sms:?body=${smsContent}`;
+    });
   </script>
 </body>
 </html>
