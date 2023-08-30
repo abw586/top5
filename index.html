@@ -37,36 +37,32 @@
     let remainingGuesses = 5;
     let correctGuesses = 0;
     const usedAnswers = new Set();
-    let hasAttempted = false;
 
     submitButton.addEventListener('click', () => {
-      if (!hasAttempted) {
-        const guessInput = document.getElementById('guess').value.trim().toLowerCase();
-        if (remainingGuesses > 0 && !usedAnswers.has(guessInput)) {
-          remainingGuesses--;
+      const guessInput = document.getElementById('guess').value.trim().toLowerCase();
+      if (remainingGuesses > 0 && !usedAnswers.has(guessInput)) {
+        remainingGuesses--;
 
-          const correctGuessIndex = cities.findIndex(city => city.toLowerCase() === guessInput || cityVariations[guessInput] === city);
-          const isCorrectGuess = correctGuessIndex !== -1;
+        const correctGuessIndex = cities.findIndex(city => city.toLowerCase() === guessInput || cityVariations[guessInput] === city);
+        const isCorrectGuess = correctGuessIndex !== -1;
 
-          if (isCorrectGuess) {
-            cityList.children[correctGuessIndex].textContent = cities[correctGuessIndex];
-            resultParagraph.textContent = `Correct guess! ${remainingGuesses} guesses remaining.`;
-            correctGuesses++;
-            usedAnswers.add(guessInput);
-            if (cityVariations[guessInput]) {
-              usedAnswers.add(cityVariations[guessInput]);
-            }
-          } else {
-            resultParagraph.textContent = `Incorrect guess. ${remainingGuesses} guesses remaining.`;
+        if (isCorrectGuess) {
+          cityList.children[correctGuessIndex].textContent = cities[correctGuessIndex];
+          resultParagraph.textContent = `Correct guess! ${remainingGuesses} guesses remaining.`;
+          correctGuesses++;
+          usedAnswers.add(guessInput);
+          if (cityVariations[guessInput]) {
+            usedAnswers.add(cityVariations[guessInput]);
           }
-
-          if (remainingGuesses === 0) {
-            resultParagraph.textContent = `You knew ${correctGuesses} of the Daily Top 5.`;
-            disableGame();
-            revealAnswers();
-          }
+        } else {
+          resultParagraph.textContent = `Incorrect guess. ${remainingGuesses} guesses remaining.`;
         }
-        hasAttempted = true;
+
+        if (remainingGuesses === 0) {
+          resultParagraph.textContent = `You knew ${correctGuesses} of the Daily Top 5.`;
+          disableGame();
+          revealAnswers();
+        }
       }
     });
 
