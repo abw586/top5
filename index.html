@@ -4,23 +4,18 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>The Daily Top 5</title>
-    <style>
+  <style>
     body {
       background-color: steelblue;
       color: white;
       font-family: Arial, sans-serif;
     }
   </style>
-  <!-- Google Analytics Tracking Code -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=YOUR_TRACKING_ID"></script>
-  <script>
-    // Your Google Analytics tracking code here
-  </script>
 </head>
 <body>
   <h1>The Daily Top 5</h1>
   <p>Guess the top 5 sodas by sales:</p>
-  <ul id="cityList" style="list-style: none; padding:0">
+  <ul id="cityList" style="list-style: none; padding: 0;">
     <li>?????</li>
     <li>?????</li>
     <li>?????</li>
@@ -35,22 +30,14 @@
     const cityVariations = {
       'Coca Cola': 'Coke',
       'Dr Pepper': 'Dr. Pepper'
-      // Add more variations as needed
     };
     const cityList = document.getElementById('cityList');
     const submitButton = document.getElementById('submit');
     const resultParagraph = document.getElementById('result');
-    const userIP = 'YOUR_USER_IP'; // Replace with actual user IP address
     let remainingGuesses = 5;
     let correctGuesses = 0;
     const usedAnswers = new Set();
-    const attemptedIPs = new Set();
-
-    // Check if user has already attempted the game based on IP address
-    const hasAttempted = attemptedIPs.has(userIP);
-    if (hasAttempted) {
-      disableGame();
-    }
+    let hasAttempted = false;
 
     submitButton.addEventListener('click', () => {
       if (!hasAttempted) {
@@ -79,20 +66,20 @@
             revealAnswers();
           }
         }
+        hasAttempted = true;
       }
     });
+
+    function disableGame() {
+      submitButton.disabled = true;
+      document.getElementById('guess').disabled = true;
+    }
 
     function revealAnswers() {
       for (let i = 0; i < cities.length; i++) {
         cityList.children[i].textContent = cities[i];
       }
     }
-
-    function disableGame() {
-      submitButton.disabled = true;
-      attemptedIPs.add(userIP);
-    }
   </script>
 </body>
 </html>
-
