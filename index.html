@@ -15,7 +15,7 @@
 <body>
   <h1>The Daily Top 5</h1>
   <p>Guess the top 5 sodas by sales:</p>
-  <ul id="cityList" style="list-style: none; padding: 0;">
+  <ul id="entryList" style="list-style: none; padding: 0;">
     <li>?????</li>
     <li>?????</li>
     <li>?????</li>
@@ -23,4 +23,60 @@
     <li>?????</li>
   </ul>
   <input type="text" id="guess" />
-  <button id="submit">Submit Guess
+  <button id="submit">Submit Guess</button>
+  <p id="result"></p>
+  <script>
+    const entries = ['Diet Coke', 'Coke', 'Sprite', 'Pepsi', 'Dr. Pepper'];
+    const entryVariations = {
+      'Coca Cola': 'Coke',
+      'Dr Pepper': 'Dr. Pepper'
+      // Add more variations as needed
+    };
+    const entryList = document.getElementById('entryList');
+    const submitButton = document.getElementById('submit');
+    const resultParagraph = document.getElementById('result');
+    let remainingGuesses = 5;
+    let correctGuesses = 0;
+    const usedAnswers = new Set();
+
+    submitButton.addEventListener('click', () => {
+      const guessInput = document.getElementById('guess').value.trim().toLowerCase();
+      if (!usedAnswers.has(guessInput) && remainingGuesses > 0) {
+        remainingGuesses--;
+
+        const correctGuessIndex = entries.findIndex(entry => entry.toLowerCase() === guessInput || entryVariations[guessInput] === entry);
+        const isCorrectGuess = correctGuessIndex !== -1;
+
+        if (isCorrectGuess) {
+          entryList.children[correctGuessIndex].textContent = entries[correctGuessIndex];
+          resultParagraph.textContent = `Correct guess! ${remainingGuesses} guesses remaining.`;
+          correctGuesses++;
+          usedAnswers.add(guessInput);
+          if (entryVariations[guessInput]) {
+            usedAnswers.add(entryVariations[guessInput]);
+          }
+        } else {
+          resultParagraph.textContent = `Incorrect guess. ${remainingGuesses} guesses remaining.`;
+        }
+
+        if (remainingGuesses === 0) {
+          resultParagraph.textContent = `You knew ${correctGuesses} of the Daily Top 5.`;
+          disableGame();
+          revealAnswers();
+        }
+      }
+    });
+
+    function disableGame() {
+      submitButton.disabled = true;
+      document.getElementById('guess').disabled = true;
+    }
+
+    function revealAnswers() {
+      for (let i = 0; i < entries.length; i++) {
+        entryList.children[i].textContent = entries[i];
+      }
+    }
+  </script>
+</body>
+</html>
