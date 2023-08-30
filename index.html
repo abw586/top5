@@ -26,6 +26,10 @@
   <input type="text" id="guess" />
   <button id="submit">Submit Guess</button>
   <p id="result"></p>
+  <div id="share-buttons">
+    <a id="twitter-share-button" href="#" target="_blank">Share on Twitter</a>
+    <a id="sms-share-button" href="sms:?body=I got [CORRECT_ANSWERS_COUNT] correct answers in The Daily Top 5 guessing game! Try it out: [GAME_URL]">Share via SMS</a>
+  </div>
   <script>
     const cities = ['Diet Coke', 'Coke', 'Sprite', 'Pepsi', 'Dr. Pepper'];
     const cityVariations = {
@@ -63,7 +67,18 @@
       for (let i = 0; i < cities.length; i++) {
         cityList.children[i].textContent = cities[i];
       }
-    }
+    } // Get the correct answers count
+    const correctAnswersCount = cities.filter(city => cityList.textContent.includes(city)).length;
+
+    // Update the Twitter share button link
+    const twitterShareButton = document.getElementById('twitter-share-button');
+    twitterShareButton.href = `https://twitter.com/intent/tweet?text=I got ${correctAnswersCount} correct answers in The Daily Top 5 guessing game! Try it out: ${window.location.href}`;
+
+    // Update the SMS share button link
+    const smsShareButton = document.getElementById('sms-share-button');
+    const gameUrl = encodeURIComponent(window.location.href);
+    const smsShareLink = smsShareButton.getAttribute('href').replace('[CORRECT_ANSWERS_COUNT]', correctAnswersCount).replace('[GAME_URL]', gameUrl);
+    smsShareButton.setAttribute('href', smsShareLink);
   </script>
 </body>
 </html>
