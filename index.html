@@ -39,10 +39,10 @@
     let remainingGuesses = 5;
 
     submitButton.addEventListener('click', () => {
-      const guessInput = document.getElementById('guess').value.trim();
-      if (remainingGuesses > 0) {
-        remainingGuesses--;
-        const correctGuessIndex = cities.findIndex(city => city.toLowerCase() === guessInput.toLowerCase() || cityVariations[guessInput.toUpperCase()] === city);
+    const guessInput = document.getElementById('guess').value.trim();
+    if (remainingGuesses > 0) {
+      remainingGuesses--;
+      const correctGuessIndex = cities.findIndex(city => city.toLowerCase() === guessInput.toLowerCase() || cityVariations[guessInput] === city);
 
         if (correctGuessIndex !== -1) {
           cityList.children[correctGuessIndex].textContent = cities[correctGuessIndex];
