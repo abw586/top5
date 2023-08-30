@@ -56,11 +56,13 @@
           cityList.children[correctGuessIndex].textContent = cities[correctGuessIndex];
           resultParagraph.textContent = `Correct guess! ${remainingGuesses} guesses remaining.`;
           correctGuesses++;
+          usedAnswers.add(guessInput.toLowerCase());
+          if (cityVariations[guessInput]) {
+            usedAnswers.add(cityVariations[guessInput].toLowerCase());
+          }
         } else {
           resultParagraph.textContent = `Incorrect guess. ${remainingGuesses} guesses remaining.`;
         }
-
-        usedAnswers.add(guessInput.toLowerCase());
 
         if (remainingGuesses === 0) {
           resultParagraph.textContent = `You knew ${correctGuesses} of the Daily Top 5.`;
