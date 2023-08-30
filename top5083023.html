@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Top 5 Guessing Game</title>
+  <style>
+    /* Add your CSS styling here */
+  </style>
+  <!-- Plausible Analytics Tracking Code -->
+  <script async defer data-domain="YOUR_PLAUSIBLE_DOMAIN" src="https://plausible.io/js/plausible.js"></script>
+</head>
+<body>
+  <h1>Top 5 Guessing Game</h1>
+  <p>Guess the top 5 US cities by population:</p>
+  <ul id="cityList">
+    <li>?</li>
+    <li>?</li>
+    <li>?</li>
+    <li>?</li>
+    <li>?</li>
+  </ul>
+  <label for="guess">Your Guess: </label>
+  <input type="text" id="guess" />
+  <button id="submit">Submit Guess</button>
+  <p id="result"></p>
+  <script>
+    const cities = ['New York City', 'Los Angeles', 'Chicago', 'Houston', 'Phoenix'];
+    const cityVariations = {
+      'NY': 'New York City',
+      'LA': 'Los Angeles'
+      // Add more variations as needed
+    };
+    const cityList = document.getElementById('cityList');
+    const submitButton = document.getElementById('submit');
+    const resultParagraph = document.getElementById('result');
+    let remainingGuesses = 5;
+
+    submitButton.addEventListener('click', () => {
+      const guessInput = document.getElementById('guess').value.trim();
+      if (remainingGuesses > 0) {
+        remainingGuesses--;
+        const correctGuessIndex = cities.findIndex(city => city.toLowerCase() === guessInput.toLowerCase() || cityVariations[guessInput.toUpperCase()] === city);
+
+        if (correctGuessIndex !== -1) {
+          cityList.children[correctGuessIndex].textContent = cities[correctGuessIndex];
+          resultParagraph.textContent = `Correct guess! ${remainingGuesses} guesses remaining.`;
+
+          // Track correct guess event
+          plausible('correct_guess', {
+            props: {
+              event_category: 'game_play',
+              event_label: 'Correct Guess'
+            }
+          });
+        } else {
+          resultParagraph.textContent = `Incorrect guess. ${remainingGuesses} guesses remaining.`;
+        }
+
+        if (remainingGuesses === 0) {
+          resultParagraph.textContent = 'Game over. You used all your guesses.';
+          submitButton.disabled = true;
+          revealAnswers();
+
+          // Track game completion event
+          plausible('game_completed', {
+            props: {
+              event_category: 'game_play',
+              event_label: 'Game Completed'
+            }
+          });
+        }
+      }
+    });
+
+    function revealAnswers() {
+      for (let i = 0; i < cities.length; i++) {
+        cityList.children[i].textContent = cities[i];
+      }
+    }
+  </script>
+</body>
+</html>
