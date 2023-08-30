@@ -40,34 +40,44 @@
     const cityList = document.getElementById('cityList');
     const submitButton = document.getElementById('submit');
     const resultParagraph = document.getElementById('result');
+    const userIP = 'YOUR_USER_IP'; // Replace with actual user IP address
     let remainingGuesses = 5;
     let correctGuesses = 0;
     const usedAnswers = new Set();
+    const attemptedIPs = new Set();
+
+    // Check if user has already attempted the game based on IP address
+    const hasAttempted = attemptedIPs.has(userIP);
+    if (hasAttempted) {
+      disableGame();
+    }
 
     submitButton.addEventListener('click', () => {
-      const guessInput = document.getElementById('guess').value.trim();
-      if (remainingGuesses > 0 && !usedAnswers.has(guessInput.toLowerCase())) {
-        remainingGuesses--;
+      if (!hasAttempted) {
+        const guessInput = document.getElementById('guess').value.trim();
+        if (remainingGuesses > 0 && !usedAnswers.has(guessInput.toLowerCase())) {
+          remainingGuesses--;
 
-        const correctGuessIndex = cities.findIndex(city => city.toLowerCase() === guessInput.toLowerCase() || cityVariations[guessInput] === city);
-        const isCorrectGuess = correctGuessIndex !== -1;
+          const correctGuessIndex = cities.findIndex(city => city.toLowerCase() === guessInput.toLowerCase() || cityVariations[guessInput] === city);
+          const isCorrectGuess = correctGuessIndex !== -1;
 
-        if (isCorrectGuess) {
-          cityList.children[correctGuessIndex].textContent = cities[correctGuessIndex];
-          resultParagraph.textContent = `Correct guess! ${remainingGuesses} guesses remaining.`;
-          correctGuesses++;
-          usedAnswers.add(guessInput.toLowerCase());
-          if (cityVariations[guessInput]) {
-            usedAnswers.add(cityVariations[guessInput].toLowerCase());
+          if (isCorrectGuess) {
+            cityList.children[correctGuessIndex].textContent = cities[correctGuessIndex];
+            resultParagraph.textContent = `Correct guess! ${remainingGuesses} guesses remaining.`;
+            correctGuesses++;
+            usedAnswers.add(guessInput.toLowerCase());
+            if (cityVariations[guessInput]) {
+              usedAnswers.add(cityVariations[guessInput].toLowerCase());
+            }
+          } else {
+            resultParagraph.textContent = `Incorrect guess. ${remainingGuesses} guesses remaining.`;
           }
-        } else {
-          resultParagraph.textContent = `Incorrect guess. ${remainingGuesses} guesses remaining.`;
-        }
 
-        if (remainingGuesses === 0) {
-          resultParagraph.textContent = `You knew ${correctGuesses} of the Daily Top 5.`;
-          submitButton.disabled = true;
-          revealAnswers();
+          if (remainingGuesses === 0) {
+            resultParagraph.textContent = `You knew ${correctGuesses} of the Daily Top 5.`;
+            disableGame();
+            revealAnswers();
+          }
         }
       }
     });
@@ -77,6 +87,12 @@
         cityList.children[i].textContent = cities[i];
       }
     }
+
+    function disableGame() {
+      submitButton.disabled = true;
+      attemptedIPs.add(userIP);
+    }
   </script>
 </body>
 </html>
+
