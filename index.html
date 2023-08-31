@@ -1,83 +1,163 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>The Daily Top 5</title>
-  <style>
-    body {
-      background-color: steelblue;
-      color: white;
-      font-family: Verdana, sans-serif;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Daily Top 5</title>
+<style>
+  body {
+    background-color: rgba(0, 0, 0, 0.4);
+    font-family: Verdana, sans-serif;
+    color: white;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+  }
+  .game-box {
+    background-color: rgba(0, 0, 128, 0.6);
+    padding: 20px;
+    border-radius: 10px;
+    margin: 100px auto;
+    max-width: 600px;
+  }
+  select {
+    font-family: Verdana, sans-serif;
+    font-size: 16px;
+    padding: 5px;
+    margin: 5px;
+  }
+  button {
+    font-family: Verdana, sans-serif;
+    font-size: 16px;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+</style>
 </head>
 <body>
-  <h1>The Daily Top 5</h1>
-  <p>Guess the top 5 TV shows by Emmy award wins:</p>
-  <ul id="entryList" style="list-style: none; padding: 0;">
-    <li>?????</li>
-    <li>?????</li>
-    <li>?????</li>
-    <li>?????</li>
-    <li>?????</li>
-  </ul>
-  <input type="text" id="guess" />
-  <button id="submit">Submit Guess</button>
+<div class="game-box">
+  <h1>Top US Cities Game</h1>
+  <p>Enter the top 5 US cities by population in the correct order (as of the 2020 Census):</p>
+  <form id="gameForm">
+    <div>
+      <label for="city1">1:</label>
+      <select id="city1" name="city1">
+        <option value="" selected disabled>Select a city</option>
+        <option value="NY">New York</option>
+        <option value="San Francisco">San Francisco</option>
+        <option value="LA">Los Angeles</option>
+        <option value="Chicago">Chicago</option>
+        <option value="Philadelphia">Philadelphia</option>
+        <option value="Houston">Houston</option>
+        <option value="Phoenix">Phoenix</option>
+        <option value="Atlanta">Atlanta</option>
+        <option value="Detroit">Detroit</option>
+        <option value="Dallas">Dallas</option>
+      </select>
+      <span id="city1Result"></span>
+    </div>
+    <div>
+      <label for="city2">2:</label>
+      <select id="city2" name="city2">
+        <option value="" selected disabled>Select a city</option>
+        <option value="NY">New York</option>
+        <option value="San Francisco">San Francisco</option>
+        <option value="LA">Los Angeles</option>
+        <option value="Chicago">Chicago</option>
+        <option value="Philadelphia">Philadelphia</option>
+        <option value="Houston">Houston</option>
+        <option value="Phoenix">Phoenix</option>
+        <option value="Atlanta">Atlanta</option>
+        <option value="Detroit">Detroit</option>
+        <option value="Dallas">Dallas</option>
+      </select>
+      <span id="city2Result"></span>
+    </div>
+    <div>
+      <label for="city3">3:</label>
+      <select id="city3" name="city3">
+        <option value="" selected disabled>Select a city</option>
+        <option value="NY">New York</option>
+        <option value="San Francisco">San Francisco</option>
+        <option value="LA">Los Angeles</option>
+        <option value="Chicago">Chicago</option>
+        <option value="Philadelphia">Philadelphia</option>
+        <option value="Houston">Houston</option>
+        <option value="Phoenix">Phoenix</option>
+        <option value="Atlanta">Atlanta</option>
+        <option value="Detroit">Detroit</option>
+        <option value="Dallas">Dallas</option>
+      </select>
+      <span id="city3Result"></span>
+    </div>
+    <div>
+      <label for="city4">4:</label>
+      <select id="city4" name="city4">        
+        <option value="" selected disabled>Select a city</option>
+        <option value="NY">New York</option>
+        <option value="San Francisco">San Francisco</option>
+        <option value="LA">Los Angeles</option>
+        <option value="Chicago">Chicago</option>
+        <option value="Philadelphia">Philadelphia</option>
+        <option value="Houston">Houston</option>
+        <option value="Phoenix">Phoenix</option>
+        <option value="Atlanta">Atlanta</option>
+        <option value="Detroit">Detroit</option>
+        <option value="Dallas">Dallas</option>
+      </select>
+      <span id="city4Result"></span>
+    </div>
+    <div>
+      <label for="city5">5:</label>
+      <select id="city5" name="city5">
+        <option value="" selected disabled>Select a city</option>
+        <option value="NY">New York</option>
+        <option value="San Francisco">San Francisco</option>
+        <option value="LA">Los Angeles</option>
+        <option value="Chicago">Chicago</option>
+        <option value="Philadelphia">Philadelphia</option>
+        <option value="Houston">Houston</option>
+        <option value="Phoenix">Phoenix</option>
+        <option value="Atlanta">Atlanta</option>
+        <option value="Detroit">Detroit</option>
+        <option value="Dallas">Dallas</option>
+      </select>
+      <span id="city5Result"></span>
+    </div>
+    <br>
+    <button type="button" onclick="checkGuess()">Submit</button>
+  </form>
   <p id="result"></p>
-  <script>
-    const entries = ['Saturday Night Live', 'Game of Thrones', 'Frasier', 'The Simpsons', 'The Mary Tyler Moore Show'];
-    const entryVariations = {
-      'SNL': 'Saturday Night Live',
-      'GOT': 'Game of Thrones',
-      'Simpsons': 'The Simpsons',
-      'Mary Tyler Moore': 'The Mary Tyler Moore Show'
-      // Add more variations as needed
-    };
-    const entryList = document.getElementById('entryList');
-    const submitButton = document.getElementById('submit');
-    const resultParagraph = document.getElementById('result');
-    let remainingGuesses = 5;
-    let correctGuesses = 0;
-    const usedAnswers = new Set();
+</div>
+<script>
+  const correctOrder = ["NY", "LA", "Chicago", "Houston", "Phoenix"];
 
-    submitButton.addEventListener('click', () => {
-      const guessInput = document.getElementById('guess').value.trim().toLowerCase();
-      if (!usedAnswers.has(guessInput) && remainingGuesses > 0) {
-        remainingGuesses--;
+  function checkGuess() {
+    const form = document.getElementById("gameForm");
+    const resultElement = document.getElementById("result");
 
-        const correctGuessIndex = entries.findIndex(entry => entry.toLowerCase() === guessInput || entryVariations[guessInput] === entry.toLowerCase());
-        const isCorrectGuess = correctGuessIndex !== -1;
+    let correctCount = 0;
 
-        if (isCorrectGuess) {
-          entryList.children[correctGuessIndex].textContent = entries[correctGuessIndex];
-          resultParagraph.textContent = `Correct guess! ${remainingGuesses} guesses remaining.`;
-          correctGuesses++;
-          usedAnswers.add(guessInput);
-          usedAnswers.add(entryVariations[guessInput]);
-        } else {
-          resultParagraph.textContent = `Incorrect guess. ${remainingGuesses} guesses remaining.`;
-        }
+    for (let i = 1; i <= 5; i++) {
+      const selectedCity = form[`city${i}`].value;
+      const cityResult = document.getElementById(`city${i}Result`);
 
-        if (remainingGuesses === 0) {
-          resultParagraph.textContent = `You knew ${correctGuesses} of the Daily Top 5.`;
-          disableGame();
-          revealAnswers();
-        }
-      }
-    });
-
-    function disableGame() {
-      submitButton.disabled = true;
-      document.getElementById('guess').disabled = true;
-    }
-
-    function revealAnswers() {
-      for (let i = 0; i < entries.length; i++) {
-        entryList.children[i].textContent = entries[i];
+      if (selectedCity === correctOrder[i - 1]) {
+        cityResult.textContent = "Correct";
+        correctCount++;
+      } else {
+        cityResult.textContent = "Incorrect";
       }
     }
-  </script>
+
+    resultElement.textContent = `You knew ${correctCount} of the Daily Top 5.`;
+  }
+</script>
 </body>
 </html>
+
 
