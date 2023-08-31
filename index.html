@@ -46,7 +46,24 @@
     <div>
       <label for="city1">1:</label>
       <select id="city1" name="city1">
-        <option value="" selected disabled>Select a city</option>
+          <option value="" selected disabled>Select an option</option>
+        <option value="NY">New York</option>
+        <option value="San Francisco">San Francisco</option>
+        <option value="LA">Los Angeles</option>
+        <option value="Chicago">Chicago</option>
+        <option value="Philadelphia">Philadelphia</option>
+        <option value="Houston">Houston</option>
+        <option value="Phoenix">Phoenix</option>
+        <option value="Atlanta">Atlanta</option>
+        <option value="Detroit">Detroit</option>
+        <option value="Dallas">Dallas</option>      
+      </select>
+      <span id="city1Result"></span>
+    </div>
+    <div>
+      <label for="city2">2:</label>
+      <select id="city2" name="city2">
+  <option value="" selected disabled>Select an option</option>
         <option value="NY">New York</option>
         <option value="San Francisco">San Francisco</option>
         <option value="LA">Los Angeles</option>
@@ -58,17 +75,66 @@
         <option value="Detroit">Detroit</option>
         <option value="Dallas">Dallas</option>
       </select>
-      <span id="city1Result"></span>
+      <span id="city2Result"></span>
     </div>
-    <!-- Repeat the same structure for city2 to city5 -->
-    <!-- ... -->
+    <div>
+      <label for="city3">3:</label>
+      <select id="city3" name="city3">
+        <option value="" selected disabled>Select an option</option>
+        <option value="NY">New York</option>
+        <option value="San Francisco">San Francisco</option>
+        <option value="LA">Los Angeles</option>
+        <option value="Chicago">Chicago</option>
+        <option value="Philadelphia">Philadelphia</option>
+        <option value="Houston">Houston</option>
+        <option value="Phoenix">Phoenix</option>
+        <option value="Atlanta">Atlanta</option>
+        <option value="Detroit">Detroit</option>
+        <option value="Dallas">Dallas</option>      
+      </select>
+      <span id="city3Result"></span>
+    </div>
+    <div>
+      <label for="city4">4:</label>
+      <select id="city4" name="city4">        
+        <option value="" selected disabled>Select an option</option>
+        <option value="NY">New York</option>
+        <option value="San Francisco">San Francisco</option>
+        <option value="LA">Los Angeles</option>
+        <option value="Chicago">Chicago</option>
+        <option value="Philadelphia">Philadelphia</option>
+        <option value="Houston">Houston</option>
+        <option value="Phoenix">Phoenix</option>
+        <option value="Atlanta">Atlanta</option>
+        <option value="Detroit">Detroit</option>
+        <option value="Dallas">Dallas</option> 
+      </select>
+      <span id="city4Result"></span>
+    </div>
+    <div>
+      <label for="city5">5:</label>
+      <select id="city5" name="city5">
+        <option value="" selected disabled>Select an option</option>
+        <option value="NY">New York</option>
+        <option value="San Francisco">San Francisco</option>
+        <option value="LA">Los Angeles</option>
+        <option value="Chicago">Chicago</option>
+        <option value="Philadelphia">Philadelphia</option>
+        <option value="Houston">Houston</option>
+        <option value="Phoenix">Phoenix</option>
+        <option value="Atlanta">Atlanta</option>
+        <option value="Detroit">Detroit</option>
+        <option value="Dallas">Dallas</option> 
+      </select>
+      <span id="city5Result"></span>
+    </div>
     <br>
     <button type="button" onclick="checkGuess()">Submit</button>
   </form>
   <p id="result"></p>
 </div>
 <script>
-  const correctOrder = ["NY", "San Francisco", "LA", "Chicago", "Philadelphia"];
+  const correctOrder = ["NY", "LA", "Chicago", "Houston", "Phoenix"];
 
   function checkGuess() {
     const form = document.getElementById("gameForm");
@@ -81,7 +147,7 @@
 
       if (selectedCity === "") {
         allSelected = false;
-        cityResult.textContent = "Select a city";
+        cityResult.textContent = "Select an option";
       } else if (selectedCity === correctOrder[i - 1]) {
         cityResult.textContent = "Correct";
       } else {
@@ -107,5 +173,3 @@
 </script>
 </body>
 </html>
-
-
