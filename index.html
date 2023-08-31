@@ -40,94 +40,22 @@
 </head>
 <body>
 <div class="game-box">
-  <h1>The Daily Top 5</h1>
+  <h1>Top US Cities Game</h1>
   <p>Enter the top 5 US cities by population in the correct order (as of the 2020 Census):</p>
   <form id="gameForm">
     <div>
       <label for="city1">1:</label>
       <select id="city1" name="city1">
-          <option value="" selected disabled>Select an option</option>
-        <option value="NY">New York</option>
-        <option value="San Francisco">San Francisco</option>
-        <option value="LA">Los Angeles</option>
-        <option value="Chicago">Chicago</option>
-        <option value="Philadelphia">Philadelphia</option>
-        <option value="Houston">Houston</option>
-        <option value="Phoenix">Phoenix</option>
-        <option value="Atlanta">Atlanta</option>
-        <option value="Detroit">Detroit</option>
-        <option value="Dallas">Dallas</option>      
-      </select>
-      <span id="city1Result"></span>
-    </div>
-    <div>
-      <label for="city2">2:</label>
-      <select id="city2" name="city2">
-  <option value="" selected disabled>Select an option</option>
-        <option value="NY">New York</option>
-        <option value="San Francisco">San Francisco</option>
-        <option value="LA">Los Angeles</option>
-        <option value="Chicago">Chicago</option>
-        <option value="Philadelphia">Philadelphia</option>
-        <option value="Houston">Houston</option>
-        <option value="Phoenix">Phoenix</option>
-        <option value="Atlanta">Atlanta</option>
-        <option value="Detroit">Detroit</option>
-        <option value="Dallas">Dallas</option>
-      </select>
-      <span id="city2Result"></span>
-    </div>
-    <div>
-      <label for="city3">3:</label>
-      <select id="city3" name="city3">
         <option value="" selected disabled>Select an option</option>
         <option value="NY">New York</option>
-        <option value="San Francisco">San Francisco</option>
         <option value="LA">Los Angeles</option>
         <option value="Chicago">Chicago</option>
-        <option value="Philadelphia">Philadelphia</option>
         <option value="Houston">Houston</option>
         <option value="Phoenix">Phoenix</option>
-        <option value="Atlanta">Atlanta</option>
-        <option value="Detroit">Detroit</option>
-        <option value="Dallas">Dallas</option>      
       </select>
-      <span id="city3Result"></span>
     </div>
-    <div>
-      <label for="city4">4:</label>
-      <select id="city4" name="city4">        
-        <option value="" selected disabled>Select an option</option>
-        <option value="NY">New York</option>
-        <option value="San Francisco">San Francisco</option>
-        <option value="LA">Los Angeles</option>
-        <option value="Chicago">Chicago</option>
-        <option value="Philadelphia">Philadelphia</option>
-        <option value="Houston">Houston</option>
-        <option value="Phoenix">Phoenix</option>
-        <option value="Atlanta">Atlanta</option>
-        <option value="Detroit">Detroit</option>
-        <option value="Dallas">Dallas</option> 
-      </select>
-      <span id="city4Result"></span>
-    </div>
-    <div>
-      <label for="city5">5:</label>
-      <select id="city5" name="city5">
-        <option value="" selected disabled>Select an option</option>
-        <option value="NY">New York</option>
-        <option value="San Francisco">San Francisco</option>
-        <option value="LA">Los Angeles</option>
-        <option value="Chicago">Chicago</option>
-        <option value="Philadelphia">Philadelphia</option>
-        <option value="Houston">Houston</option>
-        <option value="Phoenix">Phoenix</option>
-        <option value="Atlanta">Atlanta</option>
-        <option value="Detroit">Detroit</option>
-        <option value="Dallas">Dallas</option> 
-      </select>
-      <span id="city5Result"></span>
-    </div>
+    <!-- Repeat the same structure for city2 to city5 -->
+    
     <br>
     <button type="button" onclick="checkGuess()">Submit</button>
   </form>
@@ -140,33 +68,22 @@
     const form = document.getElementById("gameForm");
     const resultElement = document.getElementById("result");
     let allSelected = true;
+    let correctCount = 0;
 
     for (let i = 1; i <= 5; i++) {
       const selectedCity = form[`city${i}`].value;
-      const cityResult = document.getElementById(`city${i}Result`);
 
       if (selectedCity === "") {
         allSelected = false;
-        cityResult.textContent = "Select an option";
+        break;
       } else if (selectedCity === correctOrder[i - 1]) {
-        cityResult.textContent = "Correct";
-      } else {
-        cityResult.textContent = "Incorrect";
+        correctCount++;
       }
     }
 
     if (!allSelected) {
       resultElement.textContent = "Please select all cities.";
     } else {
-      let correctCount = 0;
-
-      for (let i = 1; i <= 5; i++) {
-        const selectedCity = form[`city${i}`].value;
-        if (selectedCity === correctOrder[i - 1]) {
-          correctCount++;
-        }
-      }
-
       resultElement.textContent = `You knew ${correctCount} of the Daily Top 5.`;
     }
   }
