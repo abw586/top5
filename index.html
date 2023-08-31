@@ -8,7 +8,7 @@
     body {
       background-color: steelblue;
       color: white;
-      font-family: Arial, sans-serif;
+      font-family: Verdana, sans-serif;
     }
   </style>
 </head>
@@ -52,9 +52,7 @@
           resultParagraph.textContent = `Correct guess! ${remainingGuesses} guesses remaining.`;
           correctGuesses++;
           usedAnswers.add(guessInput);
-          if (entryVariations[guessInput]) {
-            usedAnswers.add(entryVariations[guessInput]);
-          }
+          usedAnswers.add(entryVariations[guessInput]);
         } else {
           resultParagraph.textContent = `Incorrect guess. ${remainingGuesses} guesses remaining.`;
         }
