@@ -46,7 +46,7 @@
       if (!usedAnswers.has(guessInput) && remainingGuesses > 0) {
         remainingGuesses--;
 
-        const correctGuessIndex = entries.findIndex(entry => entry.toLowerCase() === guessInput || entryVariations[guessInput] === entry);
+        const correctGuessIndex = entries.findIndex(entry => entry.toLowerCase() === guessInput || entryVariations[guessInput] === entry.toLowerCase());
         const isCorrectGuess = correctGuessIndex !== -1;
 
         if (isCorrectGuess) {
@@ -80,3 +80,4 @@
   </script>
 </body>
 </html>
+
