@@ -144,6 +144,7 @@
 
     for (let i = 1; i <= 5; i++) {
       const selectedCity = form[`city${i}`].value;
+      const cityResult = document.getElementById(`city${i}Result`);
 
       if (selectedCity === "") {
         allSelected = false;
@@ -151,6 +152,9 @@
       } else if (selectedCity === correctOrder[i - 1]) {
         correctCount++;
       }
+
+      // Display correct answers
+      cityResult.textContent = correctOrder[i - 1];
     }
 
     if (!allSelected) {
