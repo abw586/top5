@@ -48,15 +48,11 @@
       <select id="city1" name="city1">
         <option value="" selected disabled>Select an option</option>
         <option value="NY">New York</option>
-        <option value="San Francisco">San Francisco</option>
         <option value="LA">Los Angeles</option>
         <option value="Chicago">Chicago</option>
-        <option value="Philadelphia">Philadelphia</option>
         <option value="Houston">Houston</option>
         <option value="Phoenix">Phoenix</option>
-        <option value="Atlanta">Atlanta</option>
-        <option value="Detroit">Detroit</option>
-        <option value="Dallas">Dallas</option>
+        <!-- Add more options as needed for the new question -->
       </select>
       <span id="city1Result"></span>
     </div>
@@ -65,15 +61,11 @@
       <select id="city2" name="city2">
         <option value="" selected disabled>Select an option</option>
         <option value="NY">New York</option>
-        <option value="San Francisco">San Francisco</option>
         <option value="LA">Los Angeles</option>
         <option value="Chicago">Chicago</option>
-        <option value="Philadelphia">Philadelphia</option>
         <option value="Houston">Houston</option>
         <option value="Phoenix">Phoenix</option>
-        <option value="Atlanta">Atlanta</option>
-        <option value="Detroit">Detroit</option>
-        <option value="Dallas">Dallas</option>
+        <!-- Add more options as needed for the new question -->
       </select>
       <span id="city2Result"></span>
     </div>
@@ -82,15 +74,11 @@
       <select id="city3" name="city3">
         <option value="" selected disabled>Select an option</option>
         <option value="NY">New York</option>
-        <option value="San Francisco">San Francisco</option>
         <option value="LA">Los Angeles</option>
         <option value="Chicago">Chicago</option>
-        <option value="Philadelphia">Philadelphia</option>
         <option value="Houston">Houston</option>
         <option value="Phoenix">Phoenix</option>
-        <option value="Atlanta">Atlanta</option>
-        <option value="Detroit">Detroit</option>
-        <option value="Dallas">Dallas</option>
+        <!-- Add more options as needed for the new question -->
       </select>
       <span id="city3Result"></span>
     </div>
@@ -99,15 +87,11 @@
       <select id="city4" name="city4">        
         <option value="" selected disabled>Select an option</option>
         <option value="NY">New York</option>
-        <option value="San Francisco">San Francisco</option>
         <option value="LA">Los Angeles</option>
         <option value="Chicago">Chicago</option>
-        <option value="Philadelphia">Philadelphia</option>
         <option value="Houston">Houston</option>
         <option value="Phoenix">Phoenix</option>
-        <option value="Atlanta">Atlanta</option>
-        <option value="Detroit">Detroit</option>
-        <option value="Dallas">Dallas</option>
+        <!-- Add more options as needed for the new question -->
       </select>
       <span id="city4Result"></span>
     </div>
@@ -116,15 +100,11 @@
       <select id="city5" name="city5">
         <option value="" selected disabled>Select an option</option>
         <option value="NY">New York</option>
-        <option value="San Francisco">San Francisco</option>
         <option value="LA">Los Angeles</option>
         <option value="Chicago">Chicago</option>
-        <option value="Philadelphia">Philadelphia</option>
         <option value="Houston">Houston</option>
         <option value="Phoenix">Phoenix</option>
-        <option value="Atlanta">Atlanta</option>
-        <option value="Detroit">Detroit</option>
-        <option value="Dallas">Dallas</option>
+        <!-- Add more options as needed for the new question -->
       </select>
       <span id="city5Result"></span>
     </div>
@@ -135,6 +115,7 @@
 </div>
 <script>
   const correctOrder = ["NY", "LA", "Chicago", "Houston", "Phoenix"];
+  let showAnswers = false;
 
   function checkGuess() {
     const form = document.getElementById("gameForm");
@@ -144,7 +125,6 @@
 
     for (let i = 1; i <= 5; i++) {
       const selectedCity = form[`city${i}`].value;
-      const cityResult = document.getElementById(`city${i}Result`);
 
       if (selectedCity === "") {
         allSelected = false;
@@ -152,15 +132,24 @@
       } else if (selectedCity === correctOrder[i - 1]) {
         correctCount++;
       }
-
-      // Display correct answers
-      cityResult.textContent = correctOrder[i - 1];
     }
 
     if (!allSelected) {
       resultElement.textContent = "Please enter all top 5.";
     } else {
       resultElement.textContent = `You knew ${correctCount} of the Daily Top 5.`;
+      showAnswers = true;
+      showCorrectAnswers();
+    }
+  }
+
+  function showCorrectAnswers() {
+    if (showAnswers) {
+      // Display correct answers
+      for (let i = 1; i <= 5; i++) {
+        const cityResult = document.getElementById(`city${i}Result`);
+        cityResult.textContent = correctOrder[i - 1];
+      }
     }
   }
 </script>
